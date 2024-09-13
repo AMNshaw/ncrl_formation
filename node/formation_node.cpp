@@ -156,7 +156,12 @@ int main(int argc, char **argv)
     ros::param::get("delay_step", MAV::delay_step);
 
     //Subscriber
-	if(MAV::UAV_ID == 1){
+    MAV mav[5] = {MAV(nh, "/leader_pose", 0),
+                      MAV(nh, "/MAV1/mavros/local_position/pose_initialized", 1),
+                      MAV(nh, "local/MAV2/local_position/pose_initialized", 2),
+                  MAV(nh, "/MAV3/mavros/local_position/pose_initialized", 3),
+                  MAV(nh, "/MAV4/mavros/local_position/pose_initialized", 4)};
+    /*if(MAV::UAV_ID == 1){
         MAV mav[5] = {MAV(nh, "/leader_pose", 0),
                       MAV(nh, "/MAV1/mavros/local_position/pose_initialized", 1),
                       MAV(nh, "local/MAV2/local_position/pose_initialized", 2),
@@ -168,7 +173,7 @@ int main(int argc, char **argv)
                       MAV(nh, "/MAV2/mavros/local_position/pose_initialized", 2),
                   MAV(nh, "/MAV3/mavros/local_position/pose_initialized", 3),
                   MAV(nh, "/MAV4/mavros/local_position/pose_initialized", 4)};
-    }
+    }*/
     ros::Subscriber leader_vel_sub = nh.subscribe<geometry_msgs::TwistStamped>("/leader_vel", 10, leader_vel_cb);
     ros::Subscriber uav_start_sub = nh.subscribe<std_msgs::Int32>("/uav_start", 10, start_cb);
     //Publisher    
